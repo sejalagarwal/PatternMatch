@@ -17,8 +17,10 @@ public class FeatureDetector {
 	private int[] sent=new int[2];
 	private int[] para=new int[3];
 	private List<List<Token>> myList;
-
 	
+	double avgSentenceLength = -1;
+	double punctuationFrequency = -1;
+	double avgCharactersPerWord = -1;
 	
 	FeatureDetector(List<List<Token>> myList)
 	{
@@ -160,9 +162,22 @@ public class FeatureDetector {
 		List<Entry<String, Integer>> wordFreq = CalculateWordFreq();
 		int totalSentences = sentenceCalculator();
 		int totalWords = wordNumberCalculator();
-		double avgSentencLength = avgSentenceLength();
+		double avgSentenceLength = avgSentenceLength();
 		int totalCharacterCount = characterNumberCalculator();
-		double totalPunctuationCount = calculatePunctuationFrequency();
+		double totalPunctuationFrequency = calculatePunctuationFrequency();
+		
+		this.avgCharactersPerWord = totalCharacterCount*1.0/totalWords;
+		this.avgSentenceLength = avgSentenceLength;
+		this.punctuationFrequency = totalPunctuationFrequency;
+		
+	}
+	
+	public void printMetrics(){
+		System.out.println();
+		System.out.println("Avg Characters per Word : " + avgCharactersPerWord);
+		System.out.println("Avg Sentence Length     : " + avgSentenceLength);
+		System.out.println("Punctuation Frequency   : " + punctuationFrequency);
+		System.out.println();
 	}
 	
 }

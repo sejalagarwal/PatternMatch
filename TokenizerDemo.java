@@ -98,21 +98,45 @@ public class TokenizerDemo
 	}
 	
 	public static void main(String[] args) throws Exception{
-		TokenizerDemo td = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Anna Karenina.txt");
+		TokenizerDemo othelloTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Othello.txt");
+		List<List<Token>> othelloTokenList = othelloTokenizer.tokenizeRaw();
+		TokenizerDemo macbethTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Macbeth.txt");
+		List<List<Token>> macbethTokenList = macbethTokenizer.tokenizeRaw();
+		TokenizerDemo juliusCaesarTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Julius Caesar.txt");
+		List<List<Token>> juliusCaesarTokenList = juliusCaesarTokenizer.tokenizeRaw();
+		TokenizerDemo romeoJulietTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Romeo Juliet.txt");
+		List<List<Token>> romeoJulietTokenList = romeoJulietTokenizer.tokenizeRaw();
 		
-		List<List<Token>> tokenList = td.tokenizeRaw();
-		//System.out.println(tokenList);
+		TokenizerDemo hamletTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Hamlet.txt");
+		List<List<Token>> hamletTokenList = hamletTokenizer.tokenizeRaw();
 		
-		FeatureDetector detector = new FeatureDetector(tokenList);
-		System.out.println(detector.CalculateWordFreq());
-		//System.out.println(detector.wordMap);
-		System.out.println(detector.sentenceCalculator());
-		System.out.println(detector.wordNumberCalculator());
-		System.out.println(detector.avgSentenceLength());
-		System.out.println(detector.characterNumberCalculator());
-		System.out.println(detector.calculatePunctuationFrequency());
+		TokenizerDemo annaKareninaTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Anna Karenina.txt");
+		List<List<Token>> annaKareninaTokenList = annaKareninaTokenizer.tokenizeRaw();
 		
-		//System.out.println(detector.calcAvgParagraphWords(td));
+		TokenizerDemo warAndPeaceTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\War and Peace.txt");
+		List<List<Token>> warAndPeaceTokenList = warAndPeaceTokenizer.tokenizeRaw();
+		
+		ArrayList<List<Token>> shakespeareTrainTokenList = new ArrayList<>();
+		shakespeareTrainTokenList.addAll(othelloTokenList);
+		shakespeareTrainTokenList.addAll(macbethTokenList);
+		shakespeareTrainTokenList.addAll(juliusCaesarTokenList);
+		shakespeareTrainTokenList.addAll(romeoJulietTokenList);
+		
+		FeatureDetector shakespeareTrainDetector = new FeatureDetector(shakespeareTrainTokenList);
+		shakespeareTrainDetector.calculateMetrics();
+		shakespeareTrainDetector.printMetrics();
+		
+		FeatureDetector shakespeareTestDetector = new FeatureDetector(hamletTokenList);
+		shakespeareTestDetector.calculateMetrics();
+		shakespeareTestDetector.printMetrics();
+		
+		FeatureDetector annaKareninaTestDetector = new FeatureDetector(annaKareninaTokenList);
+		annaKareninaTestDetector.calculateMetrics();
+		annaKareninaTestDetector.printMetrics();
+		
+		FeatureDetector warAndPeaceTestDetector = new FeatureDetector(warAndPeaceTokenList);
+		warAndPeaceTestDetector.calculateMetrics();
+		warAndPeaceTestDetector.printMetrics();
 		
 		//td.tokenizeLine();
 	}
