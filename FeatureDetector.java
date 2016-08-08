@@ -49,7 +49,7 @@ public class FeatureDetector {
 		return false;
 	}
 	
-	public List<Map.Entry<String, Integer>> CalculateWordFreq()
+	private List<Map.Entry<String, Integer>> CalculateWordFreq()
 	{
 		int value;
 		//System.out.println(myList);
@@ -78,13 +78,13 @@ public class FeatureDetector {
 		//tm = sortByValues(tm);
 	}
 
-	public int sentenceCalculator(){
+	private int sentenceCalculator(){
 		int sentencesCount = myList.size();
 
 		return sentencesCount;
 	}
 
-	public int wordNumberCalculator(){
+	private int wordNumberCalculator(){
 		int rows,columns=0;
 
 		rows = myList.size();
@@ -98,7 +98,7 @@ public class FeatureDetector {
 		return columns;
 	}
 
-	public double avgSentenceLength(){
+	private double avgSentenceLength(){
 		int rows;
 		double count=0;
 
@@ -113,7 +113,7 @@ public class FeatureDetector {
 		return count/rows;
 	}
 
-	public int characterNumberCalculator(){
+	private int characterNumberCalculator(){
 		int rows,columns=0;
 
 		rows = myList.size();
@@ -127,7 +127,7 @@ public class FeatureDetector {
 		return columns;
 	}
 
-	public double calculatePunctuationFrequency(){
+	private double calculatePunctuationFrequency(){
 		int i,j;
 		double puncCount=0,punAvg;
 		for(i=0;i<myList.size();i++)
@@ -146,9 +146,7 @@ public class FeatureDetector {
 		return punctuation;
 	}
 
-	public double calcAvgParagraphWords(TokenizerDemo tokenizer){
-		
-		
+	private double calcAvgParagraphWords(TokenizerDemo tokenizer){
 		try {
 			ArrayList<String> para=tokenizer.parseFileToParagraphs();
 		} catch (IOException e) {

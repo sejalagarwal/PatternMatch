@@ -97,6 +97,14 @@ public class TokenizerDemo
 
 	}
 	
+	private static double distanceMetric(FeatureDetector object1, FeatureDetector object2){
+		return Math.abs(object1.avgSentenceLength - object2.avgSentenceLength);
+	}
+	
+	private static boolean predictAuthor(FeatureDetector testObject, FeatureDetector classADetector, FeatureDetector classBDetector) {
+		return distanceMetric(testObject, classADetector) < distanceMetric(testObject, classBDetector);
+	}
+	
 	public static void main(String[] args) throws Exception{
 		TokenizerDemo othelloTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Othello.txt");
 		List<List<Token>> othelloTokenList = othelloTokenizer.tokenizeRaw();
@@ -107,14 +115,19 @@ public class TokenizerDemo
 		TokenizerDemo romeoJulietTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Romeo Juliet.txt");
 		List<List<Token>> romeoJulietTokenList = romeoJulietTokenizer.tokenizeRaw();
 		
+				
 		TokenizerDemo hamletTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Hamlet.txt");
 		List<List<Token>> hamletTokenList = hamletTokenizer.tokenizeRaw();
 		
 		TokenizerDemo annaKareninaTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\Anna Karenina.txt");
 		List<List<Token>> annaKareninaTokenList = annaKareninaTokenizer.tokenizeRaw();
-		
 		TokenizerDemo warAndPeaceTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\War and Peace.txt");
 		List<List<Token>> warAndPeaceTokenList = warAndPeaceTokenizer.tokenizeRaw();
+		TokenizerDemo kingdomOfGodTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\KingdomOfGod.txt");
+		List<List<Token>> kingdomOfGodTokenList = kingdomOfGodTokenizer.tokenizeRaw();
+		TokenizerDemo whatMenLiveByTokenizer = new TokenizerDemo("C:\\GitRepo\\PatternMatch\\WhatMenLiveBy.txt");
+		List<List<Token>> whatMenLiveByTokenList = whatMenLiveByTokenizer.tokenizeRaw();
+		
 		
 		ArrayList<List<Token>> shakespeareTrainTokenList = new ArrayList<>();
 		shakespeareTrainTokenList.addAll(othelloTokenList);
@@ -122,21 +135,38 @@ public class TokenizerDemo
 		shakespeareTrainTokenList.addAll(juliusCaesarTokenList);
 		shakespeareTrainTokenList.addAll(romeoJulietTokenList);
 		
+		ArrayList<List<Token>> tolstoyTrainTokenList = new ArrayList<>();
+		tolstoyTrainTokenList.addAll(annaKareninaTokenList);
+		tolstoyTrainTokenList.addAll(warAndPeaceTokenList);
+		tolstoyTrainTokenList.addAll(kingdomOfGodTokenList);
+		
 		FeatureDetector shakespeareTrainDetector = new FeatureDetector(shakespeareTrainTokenList);
 		shakespeareTrainDetector.calculateMetrics();
 		shakespeareTrainDetector.printMetrics();
+		
+		FeatureDetector tolstoyTrainDetector = new FeatureDetector(tolstoyTrainTokenList);
+		tolstoyTrainDetector.calculateMetrics();
+		tolstoyTrainDetector.printMetrics();
 		
 		FeatureDetector shakespeareTestDetector = new FeatureDetector(hamletTokenList);
 		shakespeareTestDetector.calculateMetrics();
 		shakespeareTestDetector.printMetrics();
 		
-		FeatureDetector annaKareninaTestDetector = new FeatureDetector(annaKareninaTokenList);
-		annaKareninaTestDetector.calculateMetrics();
-		annaKareninaTestDetector.printMetrics();
+		FeatureDetector tolstoyTestDetector = new FeatureDetector(whatMenLiveByTokenList);
+		tolstoyTestDetector.calculateMetrics();
+		tolstoyTestDetector.printMetrics();
 		
-		FeatureDetector warAndPeaceTestDetector = new FeatureDetector(warAndPeaceTokenList);
-		warAndPeaceTestDetector.calculateMetrics();
-		warAndPeaceTestDetector.printMetrics();
+		if(predictAuthor(shakespeareTestDetector, shakespeareTrainDetector, tolstoyTrainDetector)){
+			System.out.println("Shakespeare");
+		} else {
+			System.out.println("Tolstoy");
+		}
+		
+		if(predictAuthor(tolstoyTestDetector, shakespeareTrainDetector, tolstoyTrainDetector)){
+			System.out.println("Shakespeare");
+		} else {
+			System.out.println("Tolstoy");
+		}
 		
 		//td.tokenizeLine();
 	}
