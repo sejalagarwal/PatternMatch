@@ -156,7 +156,7 @@ public class TokenizerDemo
 		tolstoyTestDetector.calculateMetrics();
 		tolstoyTestDetector.printMetrics();
 		
-		if(predictAuthor(shakespeareTestDetector, shakespeareTrainDetector, tolstoyTrainDetector)){
+		/*if(predictAuthor(shakespeareTestDetector, shakespeareTrainDetector, tolstoyTrainDetector)){
 			System.out.println("Shakespeare");
 		} else {
 			System.out.println("Tolstoy");
@@ -166,7 +166,21 @@ public class TokenizerDemo
 			System.out.println("Shakespeare");
 		} else {
 			System.out.println("Tolstoy");
-		}
+		}*/
+		
+		int shakespeare=shakespeareTestDetector.avgSentenceLength();
+		int tolstoy=tolstoyTestDetector.avgSentenceLength()
+		System.out.println("Enter path of a new book : ");
+		String str=in.nextLine();
+		TokenizerDemo newBook = new TokenizerDemo(str);
+		List<List<Token>> newBookList = newBook.tokenizeRaw();
+		FeatureDetector newBookDetector = new FeatureDetector(newBook);
+		int newB=newBookDetector.avgSentenceLength();
+		if(Math.abs(shakespeare-newB)>Math.abs(tolstoy-newB))
+				System.out.println("newBook is Tolstoy");
+		else
+				System.out.println("newBook is SHakespeare");
+		
 		
 		//td.tokenizeLine();
 	}
